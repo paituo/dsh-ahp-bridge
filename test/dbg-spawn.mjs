@@ -1,0 +1,15 @@
+import { spawn } from "node:child_process";
+const NODE = process.execPath;
+const BIN = "D:/JavaSofewares/npm-cache/node_modules/@deepseek-ai/dsh/lib/bin.js";
+const child = spawn(NODE, [BIN, "--profile", "acp"], { stdio: ["pipe", "pipe", "pipe"], windowsHide: true });
+console.log("stdin type:", typeof child.stdin, "isNull:", child.stdin === null, "keys:", Object.keys(child.stdin || {}).slice(0, 8));
+console.log("child.stdin[0]:", child.stdin[0]);
+child.stdout.setEncoding("utf8");
+child.stdout.on("data", (d) => console.log("STDOUT:", JSON.stringify(d)));
+child.stderr.setEncoding("utf8");
+child.stderr.on("data", (d) => console.log("STDERR:", String(d).trim()));
+child.on("exit", (c, s) => console.log("EXIT", c, s));
+const msg = JSON.stringify({ jsonrpc: "2.0", id: 1, method: "initialize", params: { protocolVersion: 1, clientCapabilities: { fs: { readTextFile: true, writeTextFile: true } }, clientInfo: { name: "probe", version: "0" } } });
+console.log("writing:", msg.slice(0, 80));
+child.stdin.write(msg + "\n");
+setTimeout(() => { console.log("done, killing"); child.kill(); }, 15000);

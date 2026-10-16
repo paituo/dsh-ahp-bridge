@@ -1,0 +1,12 @@
+import { spawn } from "node:child_process";
+const NODE = process.execPath;
+const BRIDGE = "C:/Users/liuyue/WorkBuddy/2026-10-09-10-48-30/temp/dsh-ahp-bridge/bridge/src/bridge.mjs";
+const child = spawn(NODE, [BRIDGE, "--node", NODE, "--dsh-bin", "D:/JavaSofewares/npm-cache/node_modules/@deepseek-ai/dsh/lib/bin.js", "--cwd", "C:/Users/liuyue/WorkBuddy/2026-10-09-10-48-30", "--provider-id", "dsh"], { stdio: ["pipe", "pipe", "pipe"], windowsHide: true });
+child.stdout.setEncoding("utf8");
+child.stdout.on("data", (d) => console.log("BRIDGE-STDOUT:", JSON.stringify(d)));
+child.stderr.setEncoding("utf8");
+child.stderr.on("data", (d) => console.log("BRIDGE-STDERR:", String(d).trim()));
+child.on("exit", (c, s) => console.log("BRIDGE-EXIT", c, s));
+const msg = JSON.stringify({ jsonrpc: "2.0", id: 1, method: "initialize", params: { clientInfo: { name: "probe", version: "0" } } });
+child.stdin.write(msg + "\n");
+setTimeout(() => { console.log("--- no more waits, killing ---"); child.kill(); }, 25000);

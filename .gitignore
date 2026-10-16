@@ -1,0 +1,21 @@
+# 依赖
+node_modules/
+
+# 备份与临时产物
+*.bak
+*.bak-*
+*.tmp
+temp/
+_archive-*/
+*.log
+
+# 运行期产物
+host-final.*.log
+isolate-*.log
+
+# 编辑器 / 系统
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini

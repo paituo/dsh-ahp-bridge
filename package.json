@@ -1,0 +1,33 @@
+{
+  "name": "dsh-ahp-bridge",
+  "version": "1.0.0",
+  "private": true,
+  "description": "把 DeepSeek Harness (DSH) 以原生 agent host 形态接入 VS Code Agents 窗口的桥 —— 对外扮演 codex app-server，对内驱动 DSH 的 ACP profile",
+  "type": "module",
+  "main": "src/bridge.mjs",
+  "bin": {
+    "dsh-ahp-bridge": "src/bridge.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node src/bridge.mjs",
+    "test": "node test/unit-remaining-capabilities.mjs && node test/unit-history-turns.mjs && node test/unit-turn-axes.mjs && node test/unit-transcript.mjs && node test/unit-threadlist-contract.mjs",
+    "audit": "node src/audit-remaining-capabilities-contract.mjs && node src/audit-turn-notify-contract.mjs && node src/audit-error-report.mjs && node src/audit-resume-idempotent.mjs && node src/audit-skills-contract.mjs"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "acp",
+    "agent-client-protocol",
+    "codex",
+    "app-server",
+    "vscode",
+    "agent-host",
+    "ahp",
+    "bridge"
+  ],
+  "license": "UNLICENSED",
+  "dependencies": {}
+}
